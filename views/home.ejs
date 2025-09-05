@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="hero-wrap">
+    <div class="hero-card">
+      <h1 class="title-xl">ParcAutoFogo — voitures sélectionnées, prêtes à partir</h1>
+      <p class="subtitle">Par <strong><%= owner.name %></strong>. Des autos vérifiées, une présentation claire, et un service simple et rapide à Conakry.</p>
+      <p class="desc">Nous proposons un parc varié: citadines, berlines, SUV et utilitaires. Chaque véhicule est présenté avec transparence: année, carburant, prix et photos détaillées. Votre satisfaction est notre priorité.</p>
+      <div class="cta">
+        <a class="btn primary" href="/cars">Voir les voitures</a>
+        <a class="btn ghost" href="tel:+224620056433">Appeler</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="num"><%= cars.length %>+</div><div class="label">Voitures listées</div></div>
+        <div class="stat"><div class="num">24/7</div><div class="label">Contact facile</div></div>
+        <div class="stat"><div class="num">100%</div><div class="label">Satisfait ou conseillé</div></div>
+      </div>
+    </div>
+    <div class="owner-photo">
+      <img src="/public/images/owner-placeholder.jpg" alt="<%= owner.name %>" />
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Contact & adresse</h2>
+  <div class="car-grid" style="grid-template-columns:1fr 1fr;gap:18px">
+    <div class="hero-card">
+      <h3>Contact</h3>
+      <ul class="contact-list">
+        <li><strong>Propriétaire:</strong> <%= owner.name %></li>
+        <li><strong>Téléphone:</strong> <%= owner.phone %></li>
+        <li><strong>Email:</strong> <a href="mailto:<%= owner.email %>"><%= owner.email %></a></li>
+        <li><strong>Snap:</strong> <%= owner.snap %></li>
+      </ul>
+      <div class="cta">
+        <a class="btn primary" href="tel:+224620056433">Appeler</a>
+        <a class="btn" target="_blank" href="https://wa.me/224620056433">WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Adresse</h3>
+      <p class="desc"><%= owner.address %></p>
+      <p class="subtitle">Passez nous voir pour découvrir les véhicules en personne.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Voitures disponibles</h2>
+  <div class="car-grid">
+    <% if (!cars || cars.length === 0) { %>
+      <p>Aucune voiture pour le moment. Revenez bientôt !</p>
+    <% } %>
+    <% cars.forEach(car => { %>
+      <article class="car-card">
+        <div class="car-image">
+          <% if (car.image) { %>
+            <img src="<%= car.image %>" alt="<%= car.title %>" />
+          <% } else { %>
+            <div class="placeholder">Pas d'image</div>
+          <% } %>
+        </div>
+        <div class="car-body">
+          <h3><%= car.title %></h3>
+          <% if (car.year) { %><p class="meta">Année: <%= car.year %></p><% } %>
+          <% if (car.price) { %><p class="price"><%= new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'GNF' }).format(car.price) %></p><% } %>
+          <% if (car.description) { %><p class="desc"><%= car.description %></p><% } %>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+

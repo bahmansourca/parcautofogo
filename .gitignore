@@ -1,0 +1,14 @@
+node_modules/
+.DS_Store
+.env
+# Persisted runtime data
+/data/
+/data/uploads/
+/uploads/
+# Editors
+.vscode/
+.idea/
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

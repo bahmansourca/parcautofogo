@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+
+<div class="hero-card" style="max-width:520px;margin:40px auto">
+  <h1>Connexion Admin</h1>
+  <% if (error) { %>
+    <p class="desc" style="color:#ff9a9a"><%= error %></p>
+  <% } %>
+  <form action="/login" method="post" class="car-form">
+    <label class="full">
+      Mot de passe
+      <input type="password" name="password" required />
+    </label>
+    <div class="actions">
+      <button class="btn primary" type="submit">Se connecter</button>
+      <a class="btn" href="/">Annuler</a>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer') %>
+

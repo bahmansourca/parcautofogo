@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+<h1>Photo du propriétaire</h1>
+<p>Choisissez une photo et enregistrez. Elle sera affichée sur la page d'accueil.</p>
+
+<form action="/admin/owner-photo" method="post" enctype="multipart/form-data" class="car-form">
+  <label class="full">
+    Fichier image
+    <input type="file" accept="image/*" name="photo" required />
+  </label>
+  <div class="actions">
+    <button type="submit" class="btn primary">Téléverser</button>
+    <a href="/" class="btn">Retour à l'accueil</a>
+  </div>
+  <p class="hint">Nom de fichier enregistré: <code>owner-placeholder.jpg</code></p>
+  <div class="preview" style="margin-top:10px">
+    <img src="/public/images/owner-placeholder.jpg" alt="Aperçu" style="max-width:240px;border-radius:10px" />
+  </div>
+</form>
+
+<%- include('partials/footer') %>
+

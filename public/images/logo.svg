@@ -1,0 +1,13 @@
+<svg width="180" height="36" viewBox="0 0 180 36" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="180" y2="36" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7C5CFF"/>
+      <stop offset="1" stop-color="#23D5AB"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="6" width="28" height="24" rx="8" stroke="url(#g)" stroke-width="3" fill="rgba(255,255,255,0.05)"/>
+  <circle cx="12" cy="24" r="3" fill="#7C5CFF"/>
+  <circle cx="24" cy="24" r="3" fill="#23D5AB"/>
+  <text x="40" y="25" fill="url(#g)" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="18">ParcAutoFogo</text>
+</svg>
+

@@ -1,0 +1,82 @@
+<%- include('partials/header') %>
+
+<% const isEdit = !!car; %>
+<h1><%= isEdit ? 'Modifier une voiture' : 'Ajouter une voiture' %></h1>
+
+<form class="car-form" action="<%= isEdit ? ('/admin/cars/' + car.id) : '/admin/cars' %>" method="post" enctype="multipart/form-data">
+  <div class="form-grid">
+    <label>
+      Titre
+      <input type="text" name="title" value="<%= car ? car.title : '' %>" required />
+    </label>
+    <label>
+      Marque
+      <input type="text" name="brand" value="<%= car && car.brand ? car.brand : '' %>" />
+    </label>
+    <label>
+      Modèle
+      <input type="text" name="model" value="<%= car && car.model ? car.model : '' %>" />
+    </label>
+    <label>
+      Année
+      <input type="number" name="year" value="<%= car && car.year ? car.year : '' %>" />
+    </label>
+    <label>
+      Prix (GNF)
+      <input type="number" step="0.01" name="price" value="<%= car && car.price ? car.price : '' %>" />
+    </label>
+    <label>
+      Carburant
+      <select name="fuel_type">
+        <option value="" <%= !car || !car.fuel_type ? 'selected' : '' %> >—</option>
+        <% const fuels=['Essence','Diesel','Hybride','Électrique','GPL']; %>
+        <% fuels.forEach(f=>{ %>
+          <option value="<%= f %>" <%= car && car.fuel_type===f ? 'selected' : '' %>><%= f %></option>
+        <% }) %>
+      </select>
+    </label>
+    <label class="full">
+      Description
+      <textarea name="description" rows="4"><%= car && car.description ? car.description : '' %></textarea>
+    </label>
+    <label class="full">
+      Photo de couverture
+      <input type="file" accept="image/*" name="image" <%= isEdit ? '' : 'required' %> />
+      <% if (car && car.image) { %>
+        <input type="hidden" name="existingImage" value="<%= car.image %>" />
+        <div class="preview">
+          <img src="<%= car.image %>" alt="image actuelle" />
+        </div>
+      <% } %>
+    </label>
+    <label class="full">
+      Galerie (plusieurs images)
+      <input type="file" accept="image/*" name="gallery" multiple />
+    </label>
+  </div>
+  <div class="actions">
+    <button class="btn primary" type="submit"><%= isEdit ? 'Enregistrer' : 'Ajouter' %></button>
+    <a class="btn" href="/admin/cars">Annuler</a>
+  </div>
+</form>
+
+<% if (isEdit && images && images.length) { %>
+  <h3>Galerie existante</h3>
+  <div class="car-grid">
+    <% images.forEach(img=>{ %>
+      <article class="car-card">
+        <div class="car-image">
+          <img src="<%= img.image %>" alt="" />
+        </div>
+        <div class="car-body">
+          <form action="/admin/cars/<%= car.id %>/images/<%= img.id %>/delete" method="post" onsubmit="return confirm('Supprimer cette image ?');">
+            <button class="btn danger" type="submit">Supprimer</button>
+          </form>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>
+

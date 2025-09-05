@@ -1,0 +1,65 @@
+<%- include('partials/header') %>
+
+<a href="/cars" class="btn" style="margin-bottom:12px">← Retour</a>
+
+<div class="hero-card">
+  <h1 class="title-xl"><%= car.title %></h1>
+  <% if (car.brand || car.model) { %>
+    <p class="subtitle"><%= [car.brand, car.model].filter(Boolean).join(' ') %></p>
+  <% } %>
+  <div class="cta">
+    <a class="btn primary" href="tel:+224620056433">Appeler</a>
+    <a class="btn" target="_blank" href="https://wa.me/224620056433">WhatsApp</a>
+  </div>
+</div>
+
+<div class="car-grid" style="grid-template-columns:1.3fr .7fr;gap:18px;margin-top:16px">
+  <div>
+    <div class="car-card">
+      <div class="car-image" style="height:360px">
+        <% if (car.image) { %>
+          <img src="<%= car.image %>" alt="<%= car.title %>" />
+        <% } else { %>
+          <div class="placeholder">Pas d'image</div>
+        <% } %>
+      </div>
+    </div>
+
+    <% if (images && images.length) { %>
+      <div class="car-grid" style="grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px">
+        <% images.forEach(img=>{ %>
+          <div class="car-card">
+            <div class="car-image" style="height:120px">
+              <img src="<%= img.image %>" alt="" />
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+  <aside>
+    <div class="hero-card">
+      <% if (car.year) { %><p class="meta"><strong>Année:</strong> <%= car.year %></p><% } %>
+      <% if (car.fuel_type) { %><p class="meta"><strong>Carburant:</strong> <%= car.fuel_type %></p><% } %>
+      <% if (car.price) { %><p class="price" style="margin:6px 0 12px"><%= new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'GNF' }).format(car.price) %></p><% } %>
+      <% if (car.description) { %><p class="desc"><%= car.description %></p><% } %>
+    </div>
+    <div class="hero-card">
+      <h3>Contact</h3>
+      <ul class="contact-list">
+        <li><strong>Propriétaire:</strong> <%= owner.name %></li>
+        <li><strong>Téléphone:</strong> <%= owner.phone %></li>
+        <li><strong>Email:</strong> <a href="mailto:<%= owner.email %>"><%= owner.email %></a></li>
+        <li><strong>Snap:</strong> <%= owner.snap %></li>
+        <li><strong>Adresse:</strong> <%= owner.address %></li>
+      </ul>
+      <div class="cta">
+        <a class="btn primary" href="tel:+224620056433">Appel direct</a>
+        <a class="btn" target="_blank" href="https://wa.me/224620056433">WhatsApp</a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<%- include('partials/footer') %>
+

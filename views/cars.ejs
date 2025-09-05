@@ -1,0 +1,58 @@
+<%- include('partials/header') %>
+
+<h1>Nos voitures</h1>
+<form method="get" class="car-form" style="margin-bottom:16px">
+  <div class="form-grid" style="grid-template-columns:2fr 1fr .5fr">
+    <label class="full" style="grid-column:1/2">
+      Recherche (marque, modèle, titre)
+      <input type="text" name="q" value="<%= typeof q!== 'undefined' ? q : '' %>" placeholder="Toyota, Hyundai, etc." />
+    </label>
+    <label style="grid-column:2/3">
+      Carburant
+      <select name="fuel">
+        <option value="">Tous</option>
+        <% ['Essence','Diesel','Hybride','Électrique','GPL'].forEach(f=>{ %>
+          <option value="<%= f %>" <%= fuel===f ? 'selected' : '' %>><%= f %></option>
+        <% }) %>
+      </select>
+    </label>
+    <div style="align-self:end">
+      <button class="btn primary" type="submit">Filtrer</button>
+    </div>
+  </div>
+  <% if (q || fuel) { %>
+    <p class="subtitle">Filtre: <%= q ? ('\"' + q + '\"') : '' %> <%= fuel ? ('· ' + fuel) : '' %></p>
+  <% } %>
+</form>
+
+<div class="car-grid">
+  <% if (!cars || cars.length === 0) { %>
+    <p>Aucune voiture disponible pour le moment.</p>
+  <% } %>
+  <% cars.forEach(car => { %>
+    <article class="car-card" onclick="location.href='/cars/<%= car.id %>'" style="cursor:pointer">
+      <div class="car-image">
+        <% if (car.image) { %>
+          <img src="<%= car.image %>" alt="<%= car.title %>" />
+        <% } else { %>
+          <div class="placeholder">Pas d'image</div>
+        <% } %>
+      </div>
+      <div class="car-body">
+        <h3><a href="/cars/<%= car.id %>" class="brand" style="text-decoration:none;color:inherit"><%= car.title %></a></h3>
+        <% if (car.brand || car.model) { %><p class="meta"><%= [car.brand, car.model].filter(Boolean).join(' ') %></p><% } %>
+        <% if (car.year) { %><p class="meta">Année: <%= car.year %></p><% } %>
+        <% if (car.fuel_type) { %><p class="meta">Carburant: <%= car.fuel_type %></p><% } %>
+        <% if (car.price) { %><p class="price"><%= new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'GNF' }).format(car.price) %></p><% } %>
+        <div class="cta" style="margin-top:8px">
+          <a class="btn" href="/cars/<%= car.id %>">Détails</a>
+          <a class="btn" href="tel:+224620056433">Appeler</a>
+          <a class="btn" href="https://wa.me/224620056433" target="_blank">WhatsApp</a>
+        </div>
+      </div>
+    </article>
+  <% }) %>
+</div>
+
+<%- include('partials/footer') %>
+
