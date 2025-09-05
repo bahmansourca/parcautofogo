@@ -4,6 +4,7 @@ const express = require('express');
 const multer = require('multer');
 const Database = require('better-sqlite3');
 const session = require('express-session');
+const SQLiteStore = require('connect-sqlite3')(session);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -63,10 +64,21 @@ app.use('/uploads', express.static(uploadsDir));
 
 // Sessions for simple auth
 app.use(session({
+  store: new SQLiteStore({
+    db: 'sessions.db',
+    dir: dataDir,
+  }),
   secret: process.env.SESSION_SECRET || 'parcautofogo-secret',
   resave: false,
   saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
 }));
+
+// Expose auth state to templates
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = !!(req.session && req.session.authenticated);
+  next();
+});
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Fogo2025';
 
