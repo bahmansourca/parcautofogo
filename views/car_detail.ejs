@@ -16,7 +16,7 @@
 <div class="car-grid" style="grid-template-columns:1.3fr .7fr;gap:18px;margin-top:16px">
   <div>
     <div class="car-card">
-      <div class="car-image" style="height:360px">
+      <div class="car-image" style="aspect-ratio:16/9">
         <% if (car.image) { %>
           <img src="<%= car.image %>" alt="<%= car.title %>" />
         <% } else { %>
@@ -26,10 +26,10 @@
     </div>
 
     <% if (images && images.length) { %>
-      <div class="car-grid" style="grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px">
+      <div class="thumb-grid" style="margin-top:10px">
         <% images.forEach(img=>{ %>
           <div class="car-card">
-            <div class="car-image" style="height:120px">
+            <div class="car-image">
               <img src="<%= img.image %>" alt="" />
             </div>
           </div>

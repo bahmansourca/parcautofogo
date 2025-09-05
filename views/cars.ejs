@@ -33,7 +33,7 @@
     <article class="car-card" onclick="location.href='/cars/<%= car.id %>'" style="cursor:pointer">
       <div class="car-image">
         <% if (car.image) { %>
-          <img src="<%= car.image %>" alt="<%= car.title %>" />
+          <img src="<%= car.image %>" alt="<%= car.title %>" loading="lazy" />
         <% } else { %>
           <div class="placeholder">Pas d'image</div>
         <% } %>
