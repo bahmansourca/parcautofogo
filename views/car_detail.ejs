@@ -13,12 +13,12 @@
   </div>
 </div>
 
-<div class="car-grid" style="grid-template-columns:1.3fr .7fr;gap:18px;margin-top:16px">
+<div class="car-detail-grid">
   <div>
     <div class="car-card">
-      <div class="car-image" style="aspect-ratio:16/9">
+      <div class="car-image" style="aspect-ratio:16/9;width:100%">
         <% if (car.image) { %>
-          <img src="<%= car.image %>" alt="<%= car.title %>" />
+          <img src="<%= car.image %>" alt="<%= car.title %>" id="main-photo" />
         <% } else { %>
           <div class="placeholder">Pas d'image</div>
         <% } %>
@@ -30,7 +30,7 @@
         <% images.forEach(img=>{ %>
           <div class="car-card">
             <div class="car-image">
-              <img src="<%= img.image %>" alt="" />
+              <img src="<%= img.image %>" alt="" loading="lazy" />
             </div>
           </div>
         <% }) %>
@@ -62,4 +62,36 @@
 </div>
 
 <%- include('partials/footer') %>
+
+<script>
+  (function(){
+    const images=[...document.querySelectorAll('#main-photo, .thumb-grid img')].map(el=>el.src);
+    let index=0;
+    function open(indexToOpen){
+      index=indexToOpen;
+      const overlay=document.createElement('div');
+      overlay.className='lightbox-overlay';
+      overlay.innerHTML=`<button class="lb-arrow left" aria-label="Précédent">‹</button>
+        <div class="lightbox-content"><img src="${images[index]}" alt="" /></div>
+        <button class="lb-arrow right" aria-label="Suivant">›</button>
+        <div class="lb-counter">${index+1}/${images.length}</div>`;
+      function close(){ document.body.removeChild(overlay); }
+      function show(i){
+        index=(i+images.length)%images.length;
+        overlay.querySelector('.lightbox-content img').src=images[index];
+        overlay.querySelector('.lb-counter').textContent=`${index+1}/${images.length}`;
+      }
+      overlay.addEventListener('click',e=>{ if(e.target===overlay) close(); });
+      overlay.querySelector('.left').addEventListener('click',e=>{ e.stopPropagation(); show(index-1); });
+      overlay.querySelector('.right').addEventListener('click',e=>{ e.stopPropagation(); show(index+1); });
+      let startX=null; overlay.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
+      overlay.addEventListener('touchend',e=>{ if(startX==null) return; const dx=e.changedTouches[0].clientX-startX; if(Math.abs(dx)>40){ show(dx>0? index-1 : index+1); } startX=null; });
+      document.addEventListener('keydown',function onKey(ev){ if(!document.body.contains(overlay)) return document.removeEventListener('keydown',onKey); if(ev.key==='Escape') close(); if(ev.key==='ArrowLeft') show(index-1); if(ev.key==='ArrowRight') show(index+1); });
+      document.body.appendChild(overlay);
+    }
+    const main=document.getElementById('main-photo');
+    if(main){ main.style.cursor='zoom-in'; main.addEventListener('click',()=>open(0)); }
+    document.querySelectorAll('.thumb-grid img').forEach((img,i)=>{ img.style.cursor='zoom-in'; img.addEventListener('click',()=>open(i+1)); });
+  })();
+</script>
 

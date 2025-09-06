@@ -1,5 +1,6 @@
 /* Professional light theme */
 :root{--bg:#f7f9fc;--surface:#ffffff;--card:#ffffff;--text:#1b2430;--muted:#667085;--primary:#1a73e8;--secondary:#00b894;--accent:#ef4444;--border:#e6e9ef;--ring:rgba(26,115,232,.25)}
+:root[data-theme='dark']{--bg:#0b0f14;--surface:#0e141b;--card:rgba(16,22,30,.7);--text:#e8eef6;--muted:#a9b6c6;--primary:#7c5cff;--secondary:#23d5ab;--accent:#ff6b6b;--border:rgba(255,255,255,.12);--ring:rgba(124,92,255,.35)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
 .container{max-width:min(1180px,94vw);margin:0 auto;padding:clamp(16px,3vw,24px)}
@@ -11,6 +12,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui
 .brand::after{content:"";display:inline-block;width:8px;height:8px;margin-left:6px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));box-shadow:0 0 10px var(--ring)}
 nav a{color:#334155;text-decoration:none;margin-left:18px;padding:8px 12px;border-radius:10px}
 nav a:hover{color:#0f172a;background:#eef2f7}
+.theme-toggle{margin-left:12px}
 .nav-toggle{display:none;background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px 10px}
 
 /* Hero */
@@ -37,6 +39,15 @@ img{display:block}
 
 /* Car grid */
 .section-title{margin:8px 0 14px}
+/* Testimonials */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.testimonial{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 6px 18px rgba(15,23,42,.06)}
+.testimonial .author{margin-top:10px;color:var(--muted);font-weight:600}
+
+/* Map wrapper */
+.map-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 6px 18px rgba(15,23,42,.06)}
+.map-responsive{position:relative;padding-bottom:56.25%;height:0}
+.map-responsive iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 .car-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(12px,2.5vw,18px);align-items:stretch}
 .car-card{position:relative;background:#ffffff;border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:.22s ease;box-shadow:0 10px 24px rgba(15,23,42,.06)}
 .car-card:hover{transform:translateY(-3px);box-shadow:0 22px 40px rgba(15,23,42,.12)}
@@ -88,4 +99,18 @@ input,textarea,select{background:#fff;border:1px solid var(--border);color:var(-
 .thumb-grid .car-image{aspect-ratio:4/3}
 @media(max-width:900px){.thumb-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:700px){.thumb-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* Car detail layout */
+.car-detail-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:18px;margin-top:16px}
+@media(max-width:900px){.car-detail-grid{grid-template-columns:1fr}}
+
+/* Lightbox */
+.lightbox-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;animation:lb-fade .15s forwards}
+.lightbox-content{max-width:96vw;max-height:92vh}
+.lightbox-content img{max-width:96vw;max-height:92vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.9);border:none;border-radius:50%;width:40px;height:40px;display:grid;place-items:center;cursor:pointer}
+.lb-arrow.left{left:14px}
+.lb-arrow.right{right:14px}
+.lb-counter{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:#fff;background:rgba(0,0,0,.4);padding:6px 10px;border-radius:12px;font-weight:600}
+@keyframes lb-fade{to{opacity:1}}
 
