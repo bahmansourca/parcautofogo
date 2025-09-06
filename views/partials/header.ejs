@@ -17,6 +17,7 @@
       <nav id="site-nav">
         <a href="/">Accueil</a>
         <a href="/cars">Voitures</a>
+        <a href="/favorites">Favoris</a>
         <a href="/admin/cars">Admin</a>
         <a href="/admin/owner-photo" title="Changer la photo">Photo</a>
         <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
@@ -24,6 +25,7 @@
             <button class="btn" type="submit">Déconnexion</button>
           </form>
         <% } %>
+        <button class="btn theme-toggle" type="button" id="themeToggle">Mode</button>
       </nav>
     </div>
   </header>

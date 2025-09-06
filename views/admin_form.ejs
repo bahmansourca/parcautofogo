@@ -35,6 +35,19 @@
         <% }) %>
       </select>
     </label>
+    <label>
+      Kilométrage (km)
+      <input type="number" name="mileage" value="<%= car && car.mileage ? car.mileage : '' %>" />
+    </label>
+    <label>
+      Transmission
+      <select name="transmission">
+        <option value="" <%= !car || !car.transmission ? 'selected' : '' %> >—</option>
+        <% ['Manuelle','Automatique'].forEach(t=>{ %>
+          <option value="<%= t %>" <%= car && car.transmission===t ? 'selected' : '' %>><%= t %></option>
+        <% }) %>
+      </select>
+    </label>
     <label class="full">
       Description
       <textarea name="description" rows="4"><%= car && car.description ? car.description : '' %></textarea>

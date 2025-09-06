@@ -2,7 +2,7 @@
 
 <h1>Nos voitures</h1>
 <form method="get" class="car-form" style="margin-bottom:16px">
-  <div class="form-grid" style="grid-template-columns:2fr 1fr .5fr">
+  <div class="form-grid" style="grid-template-columns:2fr repeat(6,1fr) .6fr">
     <label class="full" style="grid-column:1/2">
       Recherche (marque, modèle, titre)
       <input type="text" name="q" value="<%= typeof q!== 'undefined' ? q : '' %>" placeholder="Toyota, Hyundai, etc." />
@@ -16,6 +16,21 @@
         <% }) %>
       </select>
     </label>
+    <label style="grid-column:3/4">Marque<input type="text" name="brand" value="<%= brand %>" /></label>
+    <label style="grid-column:4/5">Modèle<input type="text" name="model" value="<%= model %>" /></label>
+    <label style="grid-column:5/6">Transm.
+      <select name="transmission">
+        <option value="">Toutes</option>
+        <% ['Manuelle','Automatique'].forEach(t=>{ %>
+          <option value="<%= t %>" <%= transmission===t ? 'selected' : '' %>><%= t %></option>
+        <% }) %>
+      </select>
+    </label>
+    <label style="grid-column:6/7">Prix min<input type="number" name="minPrice" value="<%= minPrice %>" /></label>
+    <label style="grid-column:7/8">Prix max<input type="number" name="maxPrice" value="<%= maxPrice %>" /></label>
+    <label style="grid-column:8/9">Année min<input type="number" name="minYear" value="<%= minYear %>" /></label>
+    <label style="grid-column:9/10">Année max<input type="number" name="maxYear" value="<%= maxYear %>" /></label>
+    <label style="grid-column:10/11">Km max<input type="number" name="maxKm" value="<%= maxKm %>" /></label>
     <div style="align-self:end">
       <button class="btn primary" type="submit">Filtrer</button>
     </div>
@@ -48,6 +63,7 @@
           <a class="btn" href="/cars/<%= car.id %>">Détails</a>
           <a class="btn" href="tel:+224620056433">Appeler</a>
           <a class="btn" href="https://wa.me/224620056433" target="_blank">WhatsApp</a>
+          <button class="btn" data-fav="<%= car.id %>">Ajouter aux favoris</button>
         </div>
       </div>
     </article>

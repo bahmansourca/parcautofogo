@@ -13,6 +13,32 @@
         toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
     }
+    // Theme persistence
+    const themeKey='parcauto:theme';
+    const root=document.documentElement;
+    const saved=localStorage.getItem(themeKey);
+    if(saved){ root.setAttribute('data-theme', saved); }
+    const themeBtn=document.getElementById('themeToggle');
+    if(themeBtn){
+      themeBtn.addEventListener('click',()=>{
+        const cur=root.getAttribute('data-theme');
+        const next=cur==='dark'?'' : 'dark';
+        if(next){ root.setAttribute('data-theme','dark'); localStorage.setItem(themeKey,'dark'); }
+        else{ root.removeAttribute('data-theme'); localStorage.removeItem(themeKey); }
+      });
+    }
+    // Favorites buttons (delegation)
+    document.addEventListener('click',e=>{
+      const btn=e.target.closest('[data-fav]');
+      if(!btn) return;
+      e.preventDefault();
+      const id=Number(btn.getAttribute('data-fav'));
+      const key='parcauto:favorites';
+      const set=new Set(JSON.parse(localStorage.getItem(key)||'[]'));
+      if(set.has(id)){ set.delete(id); btn.textContent='Ajouter aux favoris'; }
+      else{ set.add(id); btn.textContent='Retirer des favoris'; }
+      localStorage.setItem(key, JSON.stringify([...set]));
+    });
   </script>
 </body>
 </html>

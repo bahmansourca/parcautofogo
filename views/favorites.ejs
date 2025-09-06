@@ -1,0 +1,35 @@
+<%- include('partials/header') %>
+
+<h1>Mes favoris</h1>
+<p class="subtitle">Retrouvez ici les voitures que vous avez ajoutées en favoris.</p>
+
+<div id="fav-root" class="car-grid"></div>
+
+<script>
+  (async function(){
+    const key='parcauto:favorites';
+    const ids=(JSON.parse(localStorage.getItem(key)||'[]')); 
+    if(!ids.length){ document.getElementById('fav-root').innerHTML='<p>Aucun favori pour le moment.</p>'; return; }
+    const res=await fetch('/api/cars?ids='+ids.join(','));
+    const cars=await res.json();
+    const root=document.getElementById('fav-root');
+    root.innerHTML=cars.map(car=>`
+      <article class="car-card">
+        <div class="car-image">${car.image?`<img src="${car.image}" alt="${car.title}" loading="lazy"/>`:'<div class="placeholder">Pas d\'image</div>'}</div>
+        <div class="car-body">
+          <h3><a href="/cars/${car.id}" class="brand" style="text-decoration:none;color:inherit">${car.title}</a></h3>
+          ${car.brand||car.model?`<p class="meta">${[car.brand,car.model].filter(Boolean).join(' ')}</p>`:''}
+          ${car.year?`<p class="meta">Année: ${car.year}</p>`:''}
+          ${car.price?`<p class="price">${new Intl.NumberFormat('fr-FR',{style:'currency',currency:'GNF'}).format(car.price)}</p>`:''}
+          <div class="cta" style="margin-top:8px">
+            <a class="btn" href="/cars/${car.id}">Détails</a>
+            <a class="btn" href="tel:+224620056433">Appeler</a>
+            <a class="btn" href="https://wa.me/224620056433" target="_blank">WhatsApp</a>
+          </div>
+        </div>
+      </article>`).join('');
+  })();
+</script>
+
+<%- include('partials/footer') %>
+
