@@ -20,11 +20,17 @@
     if(saved){ root.setAttribute('data-theme', saved); }
     const themeBtn=document.getElementById('themeToggle');
     if(themeBtn){
+      function updateThemeLabel(){
+        const cur=root.getAttribute('data-theme');
+        themeBtn.textContent = cur==='dark' ? 'Mode clair' : 'Mode sombre';
+      }
+      updateThemeLabel();
       themeBtn.addEventListener('click',()=>{
         const cur=root.getAttribute('data-theme');
         const next=cur==='dark'?'' : 'dark';
         if(next){ root.setAttribute('data-theme','dark'); localStorage.setItem(themeKey,'dark'); }
         else{ root.removeAttribute('data-theme'); localStorage.removeItem(themeKey); }
+        updateThemeLabel();
       });
     }
     // Favorites buttons (delegation)
@@ -39,6 +45,15 @@
       else{ set.add(id); btn.textContent='Retirer des favoris'; }
       localStorage.setItem(key, JSON.stringify([...set]));
     });
+    // Initialize favorites button states on load
+    (function(){
+      const key='parcauto:favorites';
+      const set=new Set(JSON.parse(localStorage.getItem(key)||'[]'));
+      document.querySelectorAll('[data-fav]').forEach(btn=>{
+        const id=Number(btn.getAttribute('data-fav'));
+        btn.textContent = set.has(id) ? 'Retirer des favoris' : 'Ajouter aux favoris';
+      });
+    })();
   </script>
 </body>
 </html>
