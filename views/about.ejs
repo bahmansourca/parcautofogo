@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+
+<h1>À propos de ParcAutoFogo</h1>
+<div class="hero-card">
+  <p>ParcAutoFogo est dirigé par <strong><%= owner.name %></strong>. Nous proposons des véhicules sélectionnés, présentés avec transparence (année, carburant, prix, photos). Notre objectif: simplicité, confiance et satisfaction.</p>
+  <ul class="contact-list">
+    <li><strong>Téléphone:</strong> <%= owner.phone %></li>
+    <li><strong>Email:</strong> <a href="mailto:<%= owner.email %>"><%= owner.email %></a></li>
+    <li><strong>Snap:</strong> <%= owner.snap %></li>
+    <li><strong>Adresse:</strong> <%= owner.address %></li>
+  </ul>
+  <div class="cta">
+    <a class="btn primary" href="/cars">Voir les voitures</a>
+    <a class="btn" href="/">Accueil</a>
+  </div>
+  <p class="subtitle">Merci pour votre confiance.</p>
+  
+</div>
+
+<%- include('partials/footer') %>
+

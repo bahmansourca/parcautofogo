@@ -256,6 +256,10 @@ app.get('/favorites', (req, res) => {
   res.render('favorites');
 });
 
+app.get('/about', (req, res) => {
+  res.render('about', { owner: OWNER });
+});
+
 app.post('/admin/cars/:id/delete', requireAuth, (req, res) => {
   const car = getCarById(req.params.id);
   if (!car) return res.status(404).send('Voiture introuvable');
